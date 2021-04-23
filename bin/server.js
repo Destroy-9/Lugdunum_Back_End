@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-var app = require('../app');
-var debug = require('debug')('lugdunum-back-end:server');
-var http = require('http');
+const app = require('../app');
+const debug = require('debug')('lugdunum-back-end:server');
+const http = require('http');
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+  const port = parseInt(val, 10);
   if (isNaN(port)) {
     return val;
   }
@@ -15,7 +15,7 @@ function normalizePort(val) {
   return false;
 }
 
-var port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 var server = http.createServer(app);
@@ -29,7 +29,7 @@ function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
   }
-  var bind = typeof port === 'string'
+  const bind = typeof port === 'string'
     ? 'Pipe ' + port
     : 'Port ' + port;
 

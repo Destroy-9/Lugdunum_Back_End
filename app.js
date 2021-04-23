@@ -1,13 +1,21 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+//importing GraphQL modules
+const graphqlHTTP = require('express-graphql').graphqlHTTP;
+const {
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLList
+} = require('graphql');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -18,6 +26,37 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'data')));
+
+//graphQL implementation
+const schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'Test',
+    fields: () => ({
+      message: {
+        type: GraphQLString,
+        resolve: () => 'Hello World'
+      }
+    })
+  })
+});
+
+//Object0Type is not yet defined + Database connexion not established
+const RootQueryType = new GraphQLObjectType({
+  name: 'Query',
+  description: 'Root Query',
+  fields: () => ({
+    objects0 : {
+      type: new GraphQLList(Object0Type),
+      description: 'List of all objects0',
+      resolve: () => objects0
+    }
+  })
+});
+
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  graphiql: true //allows interface for graphql queries and results at 'localhost:3000/graphql?'
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
