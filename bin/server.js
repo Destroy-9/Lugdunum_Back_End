@@ -26,10 +26,15 @@ var server = http.createServer(app);
  */
 
 function onError(error) {
-  if (error.syscall !== 'listen') {
+  if (error.syscall !== 'listen') { //syscall = system calls
     throw error;
   }
+<<<<<<< HEAD:bin/server.js
   const bind = typeof port === 'string'
+=======
+  /** si typof port === string alors bind prend la valeur 'Pipe' + port, sinon 'Port' + port **/
+  var bind = typeof port === 'string'
+>>>>>>> 58577fbd85d9c1266d0bc520039f08d337e931d9:bin/www.js
     ? 'Pipe ' + port
     : 'Port ' + port;
 
