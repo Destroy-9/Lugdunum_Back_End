@@ -12,6 +12,7 @@
     "express-graphql": "^0.12.0",
     "graphql": "^15.5.0",
     "http-errors": "~1.6.3",
+    "mongodb": "^3.6.6",
     "morgan": "~1.9.1",
     "pug": "2.0.0-beta11",
     "pug-code-gen": "^2.0.3"

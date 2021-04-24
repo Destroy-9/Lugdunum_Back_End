@@ -5,12 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 //importing GraphQL modules
 const graphqlHTTP = require('express-graphql').graphqlHTTP;
-const {
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLList
-} = require('graphql');
+const graphqlStuff = require('./graphql/graphqlStuff');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -27,34 +22,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'data')));
 
+//mongodb connection (you may need to perform the command "npm install mongodb"
+const MongoClient = require('mongodb').MongoClient
+//The password is incorrect, thus the connection will not be established
+const URL = 'mongodb+srv://RemiChbrt:password_for_mgdb@db4learning.yfced.mongodb.net/DB4Learning?retryWrites=true&w=majority'
+
+MongoClient.connect(URL, function(err, db) {
+  if (err){
+    console.log(err)
+    return
+  }
+  console.log(db.toString());
+});
+
 //graphQL implementation
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Test',
-    fields: () => ({
-      message: {
-        type: GraphQLString,
-        resolve: () => 'Hello World'
-      }
-    })
-  })
-});
-
-//Object0Type is not yet defined + Database connexion not established
-const RootQueryType = new GraphQLObjectType({
-  name: 'Query',
-  description: 'Root Query',
-  fields: () => ({
-    objects0 : {
-      type: new GraphQLList(Object0Type),
-      description: 'List of all objects0',
-      resolve: () => objects0
-    }
-  })
-});
-
 app.use('/graphql', graphqlHTTP({
-  schema: schema,
+  schema: graphqlStuff.schema,
   graphiql: true //allows interface for graphql queries and results at 'localhost:3000/graphql?'
 }));
 
