@@ -23,16 +23,29 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'data')));
 
 //mongodb connection (you may need to perform the command "npm install mongodb"
-const MongoClient = require('mongodb').MongoClient
-//The password is incorrect, thus the connection will not be established
-const URL = 'mongodb+srv://RemiChbrt:password_for_mgdb@db4learning.yfced.mongodb.net/DB4Learning?retryWrites=true&w=majority'
+//You also need to install the MongoDB : https://www.mongodb.com/try/download/community?tck=docs_server
+const MongoClient = require('mongodb').MongoClient;
+//for now, the database is local, i.e on the same device as the running server
+const URL = 'mongodb://localhost:27017/';
+var lugdb;
 
 MongoClient.connect(URL, function(err, db) {
   if (err){
     console.log(err)
     return
   }
-  console.log(db.toString());
+  lugdb = db.db("LugdunumDatabase");
+  console.log("Connected to local Mongo DataBase")
+
+  //User Collection creation
+  lugdb.createCollection("User", function(errColl, res) {
+    if (errColl) {
+      console.log(errColl); //print for now, not useful in the future
+    }else {
+      console.log("Collection created!");
+    }
+  });
+  db.close();
 });
 
 //graphQL implementation
@@ -59,5 +72,4 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 module.exports = app;
