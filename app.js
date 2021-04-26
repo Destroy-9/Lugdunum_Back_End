@@ -3,9 +3,13 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose = require('mongoose');
 //importing GraphQL modules
 const graphqlHTTP = require('express-graphql').graphqlHTTP;
-const graphqlStuff = require('./graphql/graphqlStuff');
+const {
+  userSchema
+} = require('./graphql/graphqlSchema');
+
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -27,30 +31,38 @@ app.use(express.static(path.join(__dirname, 'data')));
 const MongoClient = require('mongodb').MongoClient;
 //for now, the database is local, i.e on the same device as the running server
 const URL = 'mongodb://localhost:27017/';
-var lugdb;
+let lugdb;
 
-MongoClient.connect(URL, function(err, db) {
-  if (err){
+MongoClient.connect(URL, function (err, db) {
+  if (err) {
     console.log(err)
     return
   }
   lugdb = db.db("LugdunumDatabase");
-  console.log("Connected to local Mongo DataBase")
+  console.log("Connected to local Mongo DataBase for setup")
 
   //User Collection creation
-  lugdb.createCollection("User", function(errColl, res) {
+  lugdb.createCollection("User", function (errColl, res) {
     if (errColl) {
       console.log(errColl); //print for now, not useful in the future
-    }else {
+    } else {
       console.log("Collection created!");
     }
   });
   db.close();
 });
 
+//mongoose is used to define mongodb Schemas, thus simplifying the graphql implementation
+mongoose.connect(URL,
+    { useNewUrlParser: true,
+      useUnifiedTopology: true })
+    .then(() => console.log('Connected to local database'))
+    .catch(() => console.log('Connection to local database failed'));
+
+
 //graphQL implementation
 app.use('/graphql', graphqlHTTP({
-  schema: graphqlStuff.schema,
+  schema: userSchema,
   graphiql: true //allows interface for graphql queries and results at 'localhost:3000/graphql?'
 }));
 
