@@ -3,6 +3,7 @@ const {
     GraphQLString,
     GraphQLBoolean,
     GraphQLInt,
+    GraphQLID,
     GraphQLNonNull
 } = require('graphql');
 
@@ -10,8 +11,9 @@ const {
 exports.UserType = new GraphQLObjectType({
     name: 'User',
     description: 'represents a User of the Lugdunum app',
-    fields: () => ({
-        id: {type: GraphQLNonNull(GraphQLInt)},
-        password: {type: GraphQLString},
-    })
+    fields: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        username: {type: GraphQLString },
+        password: { type: GraphQLString }
+    }
 });

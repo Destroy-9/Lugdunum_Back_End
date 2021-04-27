@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 //importing GraphQL modules
 const graphqlHTTP = require('express-graphql').graphqlHTTP;
 const {
-  userSchema
+  mainSchema
 } = require('./graphql/graphqlSchema');
 
 
@@ -62,7 +62,7 @@ mongoose.connect(URL,
 
 //graphQL implementation
 app.use('/graphql', graphqlHTTP({
-  schema: userSchema,
+  schema: mainSchema,
   graphiql: true //allows interface for graphql queries and results at 'localhost:3000/graphql?'
 }));
 

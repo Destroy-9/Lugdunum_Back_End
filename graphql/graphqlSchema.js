@@ -1,7 +1,10 @@
 const graphql = require('graphql');
 const {
-    GetAllUsers
+    RootQuery
 } = require('./graphqlQuery');
+const {
+    mainMutation
+} = require('./graphqlMutations');
 
 
 //very first graphql Schema
@@ -18,6 +21,8 @@ exports.schema = new graphql.GraphQLSchema({
 });
 
 //A schema to query users (for now)
-exports.userSchema = new graphql.GraphQLSchema({
-    query: GetAllUsers
+exports.mainSchema = new graphql.GraphQLSchema({
+    query: RootQuery,
+    mutation: mainMutation,
+    description: 'Main schema'
 });
