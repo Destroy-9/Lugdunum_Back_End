@@ -3,7 +3,7 @@ const {
     UserType
 } = require('./graphqlObjects');
 const {
-    User
+    UserModel
 } = require('../mongo/mongoSchema');
 
 //query to get users and their args
@@ -15,7 +15,7 @@ exports.RootQuery = new graphql.GraphQLObjectType({
             type: new graphql.GraphQLList(UserType),
             description: 'Query to get a list of all Users',
             resolve: () => {
-                return User.find().exec();
+                return UserModel.find().exec();
             }
         },
         user : {
@@ -24,8 +24,8 @@ exports.RootQuery = new graphql.GraphQLObjectType({
             args: {
                 id: { type: graphql.GraphQLNonNull(graphql.GraphQLID) }
             },
-            resolve: () => {
-                return User.findById(args.id).exec();
+            resolve: (source, args, context, info) => {
+                return UserModel.findById(args.id).exec();
             }
         }
     })

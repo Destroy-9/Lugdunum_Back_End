@@ -1,0 +1,22 @@
+
+
+
+//stores a new user in the database
+mutation createUser($username: String!, $password: String!){
+  user(username: $username, password: $password){
+    id,
+    username,
+    password
+  }
+}
+
+
+//get all parameters from all Users
+{
+  users{
+    username,
+    password,
+    id
+  }
+}
+
