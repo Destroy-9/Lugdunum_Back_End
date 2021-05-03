@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb2cc912-e5df-494c-bff9-5aa47b55cb39" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphql/graphqlMutations.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/graphqlObjects.js" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graphqlObjects.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/graphqlQuery.js" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graphqlQuery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/graphqlSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graphqlSchema.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mongo/mongoSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/mongo/mongoSchema.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +24,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1qQndwmHn6e0Up8zVIuTJ5RZtr7" />
   <component name="ProjectViewState">
@@ -45,7 +59,15 @@
       <option name="presentableId" value="Default" />
       <updated>1617020772920</updated>
       <workItem from="1617020775366" duration="2286000" />
+      <workItem from="1617023104439" duration="4529000" />
+      <workItem from="1617029058786" duration="2475000" />
+      <workItem from="1617192817997" duration="1631000" />
+      <workItem from="1619166523898" duration="4252000" />
       <workItem from="1617023104439" duration="3667000" />
+      <workItem from="1617034343474" duration="273000" />
+      <workItem from="1619358121471" duration="5416000" />
+      <workItem from="1619417095030" duration="10491000" />
+      <workItem from="1619553901963" duration="5009000" />
     </task>
     <servers />
   </component>
