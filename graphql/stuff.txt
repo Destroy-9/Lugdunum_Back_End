@@ -10,13 +10,16 @@ mutation createUser($username: String!, $password: String!){
   }
 }
 
-
-//get all parameters from all Users
 {
-  users{
-    username,
+  user(id: "609142b31ec8d9245cc904e6"){
+    id,
     password,
-    id
+    username,
+    localizations {
+      id,
+      lat,
+      long,
+    }
   }
 }
 

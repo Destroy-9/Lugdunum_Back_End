@@ -2,37 +2,65 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLInt,
+    GraphQLList,
+    GraphQLFloat,
     GraphQLID,
     GraphQLNonNull
 } = require('graphql');
 
-exports.TimeType = new GraphQLObjectType( {
+const TimeType = new GraphQLObjectType({
     name: 'Time',
-    fields: {
-        id: { type: GraphQLNonNull(GraphQLID) },
-        hour: { type: GraphQLInt },
-        minutes: { type: GraphQLInt }
-    }
-});
+    description: 'Represents a Time',
+    fields: () => ({
+        id: {type: GraphQLNonNull(GraphQLID)},
+        hour: {type: GraphQLInt},
+        minutes: {type: GraphQLInt}
+    })
+})
 
-exports.LocalizationType = new GraphQLObjectType( {
+const LocalizationType = new GraphQLObjectType({
     name: 'Localization',
-    fields: {
-        id: { type: GraphQLNonNull(GraphQLID) },
-        lat: { type: GraphQLInt },
-        long: { type: GraphQLInt },
-        timeId: { type: GraphQLList(GraphQLID) }
-    }
+    description: 'Represents localization with lat and long',
+    fields: () => ({
+        id: {type: GraphQLNonNull(GraphQLID)},
+        lat: {type: GraphQLFloat},
+        long: {type: GraphQLFloat},
+        userId: {type: GraphQLID},
+        user: {
+            type: UserType,
+            resolve: (localization) => {
+                return users.find(user => user.id === localization.userId)
+            }
+        },
+        timeId: { type: GraphQLID },
+        time: {
+            type : TimeType,
+            resolve: (localization) => {
+                return times.find(time => time.id === localization.timeId)
+            }
+        }
+    })
 });
 
 //A graphql object that represents a User
-exports.UserType = new GraphQLObjectType({
+const UserType = new GraphQLObjectType({
     name: 'User',
     description: 'represents a User of the Lugdunum app',
-    fields: {
-        id: { type: GraphQLNonNull(GraphQLID) },
-        username: { type: GraphQLString },
-        password: { type: GraphQLString },
-        localizationID: { type: GraphQLList(GraphQLID) }
-    }
+    fields: () => ({
+        id: {type: GraphQLNonNull(GraphQLID)},
+        username: {type: GraphQLString},
+        password: {type: GraphQLString},
+        localizations: {
+            type: new GraphQLList(LocalizationType),
+            resolve: (user) => {
+                return localizations.filter(localization => localization.userId === user.id)
+            }
+        }
+    })
 });
+
+module.exports = {
+    LocalizationType: LocalizationType,
+    UserType: UserType,
+    TimeType: TimeType
+}
