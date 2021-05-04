@@ -1,6 +1,8 @@
 const graphql = require('graphql');
 const {
-    UserType
+    UserType,
+    LocalizationType,
+    TimeType
 } = require('./graphqlObjects');
 const {
     UserModel
@@ -10,7 +12,7 @@ const {
 exports.mainMutation = new graphql.GraphQLObjectType({
     name: 'Mutation',
     fields:{
-        user: {
+        createUser: {
             type: UserType,
             args: {
                 username: { type: graphql.GraphQLNonNull(graphql.GraphQLString) },
@@ -18,9 +20,12 @@ exports.mainMutation = new graphql.GraphQLObjectType({
             },
             //not correct interaction with database (data validation needed)
             resolve: (root, args, context, info) => {
-                var user = new UserModel(args);
-                return user.save();
+                var createUser = new UserModel(args);
+                return createUser.save();
             }
         }
+        //addLocalization: {
+        //    type: UserType,
+        //}
     }
 });

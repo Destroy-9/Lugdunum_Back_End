@@ -3,7 +3,7 @@
 
 //stores a new user in the database
 mutation createUser($username: String!, $password: String!){
-  user(username: $username, password: $password){
+  createUser(username: $username, password: $password){
     id,
     username,
     password
