@@ -23,3 +23,11 @@ mutation createUser($username: String!, $password: String!){
   }
 }
 
+{
+	users{
+    id,
+    username,
+    password
+  }
+}
+

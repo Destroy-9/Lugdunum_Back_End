@@ -66,6 +66,17 @@ exports.RootQuery = new graphql.GraphQLObjectType({
             resolve: (source, args, context, info) => {
                 return TimeModel.findById(args.id).exec();
             }
+        },
+        deleteUser : {
+            type : UserType,
+            description : 'Query to delete a user',
+            args: {
+                id: { type: graphql.GraphQLNonNull(graphql.GraphQLID) }
+            },
+            resolve: (source, args, context, info) => {
+                return UserModel.findByIdAndDelete(args.id);
+            }
         }
+
     })
 });
