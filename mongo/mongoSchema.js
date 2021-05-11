@@ -7,7 +7,7 @@ exports.UserModel = mongoose.model("user",{
 
 exports.TimeModel = mongoose.model("time",{
     hour: { type: Number, required: true },
-    minute: { type: Number, required: true }
+    minutes: { type: Number, required: true }
 });
 
 exports.LocalizationModel = mongoose.model("localization", {

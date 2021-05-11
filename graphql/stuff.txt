@@ -1,5 +1,4 @@
-
-
+-----------------ADD TO DATABASE---------------------------------
 
 //stores a new user in the database
 mutation createUser($username: String!, $password: String!){
@@ -10,6 +9,122 @@ mutation createUser($username: String!, $password: String!){
   }
 }
 
+//mutation to add a time
+mutation createTime($hour: Int!, $minutes: Int!){
+  addTime(hour: $hour, minutes: $minutes){
+    id,
+    hour,
+    minutes
+  }
+}
+
+//mutation to add localization
+mutation createLoc($lat: Float!, $long: Float!, $userId: ID!, $timeId: ID!){
+  addLocalization(lat: $lat, long: $long, userId: $userId, timeId: $timeId){
+    id,
+    lat,
+    long
+  }
+}
+
+-----------------GET ALL USERS/TIMES/LOCALIZATION----------------
+
+//get users
+{
+	users{
+    id,
+    username,
+    password
+  }
+}
+
+//get times
+{
+  times{
+    id,
+    hour,
+    minutes
+  }
+}
+
+//get localizations
+{
+  localizations{
+    id,
+    lat,
+    long
+  }
+}
+
+-----------------UPDATE------------------------------------------
+
+//query to update user
+query UpdateLoc($id: ID!, $username: String!, $password: String!) {
+    updateUser(id: $id, username : $username, password: $password){
+    id,
+    username,
+    password
+  }
+}
+
+//query to update time
+query UpdateTime($id: ID!, $hour: Int!, $minutes: Int!) {
+  updateTime(id: $id, hour: $hour, minutes: $minutes) {
+    hour,
+    minutes
+  }
+}
+
+//query to update localization
+query UpdateLoc($id: ID!, $lat: Float!, $long: Float!) {
+  updateLocalization(id: $id, lat: $lat, long: $long) {
+    id,
+    lat,
+    long
+  }
+}
+
+-----------------DELETE------------------------------------------
+
+//query to delete user
+query DeleteUser($id: ID!) {
+  deleteUser(id: $id) {
+    id,
+    name,
+    password
+  }
+}
+
+//query to delete time
+query DeleteTime($id: ID!) {
+  deleteTime(id: $id) {
+    id,
+    hour,
+    minutes
+  }
+}
+
+//query to delete localization
+query DeleteLoc($id: ID!) {
+  deleteLocalization(id: $id) {
+    id,
+    lat,
+    long
+  }
+}
+
+-----------------OTHER QUERIES-----------------------------------
+
+//query to have time by ID
+
+query Time($id: ID!) {
+  time(id: $id) {
+    hour,
+    minutes
+  }
+}
+
+//query to find a user by ID
 {
   user(id: "609142b31ec8d9245cc904e6"){
     id,
@@ -22,22 +137,3 @@ mutation createUser($username: String!, $password: String!){
     }
   }
 }
-
-//get users
-{
-	users{
-    id,
-    username,
-    password
-  }
-}
-
-//query to update
-{
-    updateUser(id: "60916ddbaece2f224970c9bc", username : "Jean-Phillipe", password: "j'aime la guitare"){
-    id,
-    username,
-    password
-  }
-}
-

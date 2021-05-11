@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="cb2cc912-e5df-494c-bff9-5aa47b55cb39" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/graphqlMutations.js" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graphqlMutations.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/graphqlQuery.js" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graphqlQuery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/stuff.txt" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/stuff.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mongo/mongoSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/mongo/mongoSchema.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +32,7 @@
     </file-type-list>
   </component>
   <component name="ProjectId" id="1qQndwmHn6e0Up8zVIuTJ5RZtr7" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -36,8 +41,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="14.16.0" />
-    <property name="javascript.nodejs.core.library.typings.version" value="14.14.37" />
+    <property name="javascript.nodejs.core.library.configured.version" value="12.22.1" />
+    <property name="javascript.nodejs.core.library.typings.version" value="12.20.12" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -65,6 +70,8 @@
       <workItem from="1620043388593" duration="8662000" />
       <workItem from="1620131210688" duration="12656000" />
       <workItem from="1620735536942" duration="422000" />
+      <workItem from="1620736909725" duration="4756000" />
+      <workItem from="1620742006222" duration="7616000" />
     </task>
     <servers />
   </component>
