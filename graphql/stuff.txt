@@ -23,8 +23,18 @@ mutation createUser($username: String!, $password: String!){
   }
 }
 
+//get users
 {
 	users{
+    id,
+    username,
+    password
+  }
+}
+
+//query to update
+{
+    updateUser(id: "60916ddbaece2f224970c9bc", username : "Jean-Phillipe", password: "j'aime la guitare"){
     id,
     username,
     password

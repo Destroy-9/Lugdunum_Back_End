@@ -76,7 +76,18 @@ exports.RootQuery = new graphql.GraphQLObjectType({
             resolve: (source, args, context, info) => {
                 return UserModel.findByIdAndDelete(args.id);
             }
-        }
+        },
+        updateUser : {
+            type: UserType,
+            args: {
+                id: { type: graphql.GraphQLNonNull(graphql.GraphQLString) },
+                username: {type: graphql.GraphQLNonNull(graphql.GraphQLString) },
+                password: {type: graphql.GraphQLNonNull(graphql.GraphQLString) }
+            },
+            resolve: (source, args, context, info) =>{
+                return UserModel.findByIdAndUpdate(args.id,args);;
+            }
 
+        }
     })
 });
