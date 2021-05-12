@@ -85,9 +85,51 @@ exports.RootQuery = new graphql.GraphQLObjectType({
                 password: {type: graphql.GraphQLNonNull(graphql.GraphQLString) }
             },
             resolve: (source, args, context, info) =>{
-                return UserModel.findByIdAndUpdate(args.id,args);;
+                return UserModel.findByIdAndUpdate(args.id,args);
             }
 
+        },
+        deleteLocalization : {
+            type: LocalizationType,
+            description: 'Query to delete a localization',
+            args: {
+                id: { type: graphql.GraphQLNonNull(graphql.GraphQLID) }
+            },
+            resolve: (source, args, context, info) => {
+                return LocalizationModel.findByIdAndDelete(args.id);
+            }
+        },
+        updateLocalization : {
+            type: LocalizationType,
+            args: {
+                id: {type: graphql.GraphQLNonNull(graphql.GraphQLID)},
+                lat: {type: graphql.GraphQLNonNull(graphql.GraphQLFloat)},
+                long: {type: graphql.GraphQLNonNull(graphql.GraphQLFloat)}
+            },
+            resolve: (source, args, context, info) =>{
+                return LocalizationModel.findByIdAndUpdate(args.id,args);
+            }
+        },
+        deleteTime : {
+            type: TimeType,
+            description: 'Query to delete a time',
+            args: {
+                id: { type: graphql.GraphQLNonNull(graphql.GraphQLID) }
+            },
+            resolve: (source, args, context, info) => {
+                return TimeModel.findByIdAndDelete(args.id);
+            }
+        },
+        updateTime : {
+            type: TimeType,
+            args: {
+                id: { type: graphql.GraphQLNonNull(graphql.GraphQLID) },
+                hour: {type: graphql.GraphQLNonNull(graphql.GraphQLInt)},
+                minutes: {type: graphql.GraphQLNonNull(graphql.GraphQLInt)}
+            },
+            resolve: (source, args, context, info) =>{
+                return TimeModel.findByIdAndUpdate(args.id,args);
+            }
         }
     })
 });

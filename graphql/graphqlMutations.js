@@ -31,8 +31,8 @@ exports.mainMutation = new graphql.GraphQLObjectType({
             args: {
                 lat: {type: graphql.GraphQLNonNull(graphql.GraphQLFloat)},
                 long: {type: graphql.GraphQLNonNull(graphql.GraphQLFloat)},
-                userId: {type: graphql.GraphQLNonNull(graphql.GraphQLFloat)},
-                timeId: {type: graphql.GraphQLNonNull(graphql.GraphQLFloat)},
+                userId: { type: graphql.GraphQLNonNull(graphql.GraphQLID) },
+                timeId: { type: graphql.GraphQLNonNull(graphql.GraphQLID) },
             },
             resolve: (root, args, context, info) => {
                 const addLocalization = new LocalizationModel(args);
