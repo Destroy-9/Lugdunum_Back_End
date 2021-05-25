@@ -18,20 +18,14 @@ const usersRouter = require('./routes/users');
 const app = express();
 
 //adding Cross-Origin Resource Sharing
-let whitelist = ['http://localhost:4000']
 
-app.use(cors({
-  origin: function(origin, callback){
-    // allow requests with no origin
-    if(!origin) return callback(null, true);
-    if(whitelist.indexOf(origin) === -1){
-      var message = 'The CORS policy for this origin doesnt ' +
-      'allow access from the particular origin.';
-      return callback(new Error(message), false);
-    }
-    return callback(null, true);
-  }
-}));
+app.use(cors());
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,31 +37,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'data')));
 
-//mongodb connection (you may need to perform the command "npm install mongodb"
-//You also need to install the MongoDB : https://www.mongodb.com/try/download/community?tck=docs_server
-const MongoClient = require('mongodb').MongoClient;
+//You also may want to install the MongoDB : https://www.mongodb.com/try/download/community?tck=docs_server
 //for now, the database is local, i.e on the same device as the running server
 const URLDatabase = 'mongodb://localhost:27017/';
-let lugdb;
-
-/*MongoClient.connect(URLDatabase, function (err, db) {
-  if (err) {
-    console.log(err)
-    return
-  }
-  lugdb = db.db("LugdunumDatabase");
-  console.log("Connected to local Mongo DataBase for setup")
-
-  //User Collection creation
-  lugdb.createCollection("User", function (errColl, res) {
-    if (errColl) {
-      console.log(errColl); //print for now, not useful in the future
-    } else {
-      console.log("Collection created!");
-    }
-  });
-  db.close();
-});*/
 
 //mongoose is used to define mongodb Schemas, thus simplifying the graphql implementation
 mongoose.connect(URLDatabase,
@@ -84,7 +56,7 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+//app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
