@@ -1,22 +1,11 @@
 const {
     GraphQLObjectType,
     GraphQLString,
-    GraphQLInt,
     GraphQLList,
     GraphQLFloat,
     GraphQLID,
     GraphQLNonNull
 } = require('graphql');
-
-const TimeType = new GraphQLObjectType({
-    name: 'Time',
-    description: 'Represents a Time',
-    fields: () => ({
-        id: {type: GraphQLNonNull(GraphQLID)},
-        hour: {type: GraphQLInt},
-        minutes: {type: GraphQLInt}
-    })
-})
 
 const LocalizationType = new GraphQLObjectType({
     name: 'Localization',
@@ -32,13 +21,13 @@ const LocalizationType = new GraphQLObjectType({
                 return users.find(user => user.id === localization.userId)
             }
         },
-        timeId: { type: GraphQLID },
-        time: {
-            type : TimeType,
-            resolve: (localization) => {
-                return times.find(time => time.id === localization.timeId)
+        createdAt: {
+            type: GraphQLString,
+            resolve: (user) => {
+                return toString(user.createdAt);
             }
-        }
+        },
+        updatedAt: {type: GraphQLString}
     })
 });
 
@@ -55,12 +44,18 @@ const UserType = new GraphQLObjectType({
             resolve: (user) => {
                 return localizations.filter(localization => localization.userId === user.id)
             }
-        }
+        },
+        createdAt: {
+            type: GraphQLString,
+            resolve: (user) => {
+                return Date.toString(user.createdAt);
+            }
+        },
+        updatedAt: {type: GraphQLString}
     })
 });
 
 module.exports = {
     LocalizationType: LocalizationType,
-    UserType: UserType,
-    TimeType: TimeType
+    UserType: UserType
 }

@@ -32,22 +32,10 @@ exports.mainMutation = new graphql.GraphQLObjectType({
                 lat: {type: graphql.GraphQLNonNull(graphql.GraphQLFloat)},
                 long: {type: graphql.GraphQLNonNull(graphql.GraphQLFloat)},
                 userId: { type: graphql.GraphQLNonNull(graphql.GraphQLID) },
-                timeId: { type: graphql.GraphQLNonNull(graphql.GraphQLID) }
             },
             resolve: (root, args, context, info) => {
                 const addLocalization = new LocalizationModel(args);
                 return addLocalization.save();
-            }
-        },
-        addTime: {
-            type: TimeType,
-            args: {
-                hour: {type: graphql.GraphQLNonNull(graphql.GraphQLInt)},
-                minutes: {type: graphql.GraphQLNonNull(graphql.GraphQLInt)}
-            },
-            resolve: (root, args, context, info) => {
-                const addTime = new TimeModel(args);
-                return addTime.save();
             }
         }
     }

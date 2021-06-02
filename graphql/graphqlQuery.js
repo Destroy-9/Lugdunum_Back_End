@@ -1,8 +1,7 @@
 const graphql = require('graphql');
 const {
     UserType,
-    LocalizationType,
-    TimeType
+    LocalizationType
 } = require('./graphqlObjects');
 const {
     UserModel,
@@ -50,23 +49,6 @@ exports.RootQuery = new graphql.GraphQLObjectType({
                 return LocalizationModel.findById(args.id).exec();
             }
         },
-        times : {
-            type: new graphql.GraphQLList(TimeType),
-            description: 'Query to get a list of all times',
-            resolve: () => {
-                return TimeModel.find().exec();
-            }
-        },
-        time : {
-            type: TimeType,
-            description: 'Query a time from id',
-            args: {
-                id: { type: graphql.GraphQLNonNull(graphql.GraphQLID) }
-            },
-            resolve: (source, args, context, info) => {
-                return TimeModel.findById(args.id).exec();
-            }
-        },
         deleteUser : {
             type : UserType,
             description : 'Query to delete a user',
@@ -108,27 +90,6 @@ exports.RootQuery = new graphql.GraphQLObjectType({
             },
             resolve: (source, args, context, info) =>{
                 return LocalizationModel.findByIdAndUpdate(args.id,args);
-            }
-        },
-        deleteTime : {
-            type: TimeType,
-            description: 'Query to delete a time',
-            args: {
-                id: { type: graphql.GraphQLNonNull(graphql.GraphQLID) }
-            },
-            resolve: (source, args, context, info) => {
-                return TimeModel.findByIdAndDelete(args.id);
-            }
-        },
-        updateTime : {
-            type: TimeType,
-            args: {
-                id: { type: graphql.GraphQLNonNull(graphql.GraphQLID) },
-                hour: {type: graphql.GraphQLNonNull(graphql.GraphQLInt)},
-                minutes: {type: graphql.GraphQLNonNull(graphql.GraphQLInt)}
-            },
-            resolve: (source, args, context, info) =>{
-                return TimeModel.findByIdAndUpdate(args.id,args);
             }
         }
     })
