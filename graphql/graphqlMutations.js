@@ -1,8 +1,9 @@
 const graphql = require('graphql');
+const bcrypt = require('bcrypt');
+
 const {
     UserType,
     LocalizationType,
-    TimeType
 } = require('./graphqlObjects');
 const {
     UserModel,
@@ -21,8 +22,13 @@ exports.mainMutation = new graphql.GraphQLObjectType({
                 password: { type: graphql.GraphQLNonNull(graphql.GraphQLString) }
             },
             //not correct interaction with database (data validation needed)
-            resolve: (root, args, context, info) => {
-                const createUser = new UserModel(args);
+            resolve: async (root, args, context, info) => {
+                //Hashing the password
+                const hash = await bcrypt.hash(args.password, 10);
+                const createUser = new UserModel({
+                    username: args.username,
+                    password: hash
+                });
                 return createUser.save();
             }
         },
