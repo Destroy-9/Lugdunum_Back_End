@@ -21,12 +21,7 @@ const LocalizationType = new GraphQLObjectType({
                 return users.find(user => user.id === localization.userId)
             }
         },
-        createdAt: {
-            type: GraphQLString,
-            resolve: (user) => {
-                return toString(user.createdAt);
-            }
-        },
+        createdAt: {type: GraphQLString},
         updatedAt: {type: GraphQLString}
     })
 });
@@ -45,12 +40,7 @@ const UserType = new GraphQLObjectType({
                 return localizations.filter(localization => localization.userId === user.id)
             }
         },
-        createdAt: {
-            type: GraphQLString,
-            resolve: (user) => {
-                return Date.toString(user.createdAt);
-            }
-        },
+        createdAt: {type: GraphQLString},
         updatedAt: {type: GraphQLString}
     })
 });
