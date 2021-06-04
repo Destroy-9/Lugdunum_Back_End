@@ -9,15 +9,6 @@ mutation createUser($username: String!, $password: String!){
   }
 }
 
-//mutation to add a time
-mutation createTime($hour: Int!, $minutes: Int!){
-  addTime(hour: $hour, minutes: $minutes){
-    id,
-    hour,
-    minutes
-  }
-}
-
 //mutation to add localization
 mutation createLoc($lat: Float!, $long: Float!, $userId: ID!, $timeId: ID!){
   addLocalization(lat: $lat, long: $long, userId: $userId, timeId: $timeId){
@@ -27,7 +18,7 @@ mutation createLoc($lat: Float!, $long: Float!, $userId: ID!, $timeId: ID!){
   }
 }
 
------------------GET ALL USERS/TIMES/LOCALIZATION----------------
+-----------------GET ALL USERS/LOCALIZATION----------------
 
 //get users
 {
@@ -38,21 +29,14 @@ mutation createLoc($lat: Float!, $long: Float!, $userId: ID!, $timeId: ID!){
   }
 }
 
-//get times
-{
-  times{
-    id,
-    hour,
-    minutes
-  }
-}
-
 //get localizations
 {
   localizations{
     id,
     lat,
-    long
+    long,
+    createdAt,
+    updatedAt
   }
 }
 
@@ -64,14 +48,6 @@ query UpdateLoc($id: ID!, $username: String!, $password: String!) {
     id,
     username,
     password
-  }
-}
-
-//query to update time
-query UpdateTime($id: ID!, $hour: Int!, $minutes: Int!) {
-  updateTime(id: $id, hour: $hour, minutes: $minutes) {
-    hour,
-    minutes
   }
 }
 
@@ -95,15 +71,6 @@ query DeleteUser($id: ID!) {
   }
 }
 
-//query to delete time
-query DeleteTime($id: ID!) {
-  deleteTime(id: $id) {
-    id,
-    hour,
-    minutes
-  }
-}
-
 //query to delete localization
 query DeleteLoc($id: ID!) {
   deleteLocalization(id: $id) {
@@ -115,15 +82,6 @@ query DeleteLoc($id: ID!) {
 
 -----------------OTHER QUERIES-----------------------------------
 
-//query to have time by ID
-
-query Time($id: ID!) {
-  time(id: $id) {
-    hour,
-    minutes
-  }
-}
-
 //query to find a user by ID
 {
   user(id: "609142b31ec8d9245cc904e6"){
@@ -134,6 +92,7 @@ query Time($id: ID!) {
       id,
       lat,
       long,
+      createdAt
     }
   }
 }

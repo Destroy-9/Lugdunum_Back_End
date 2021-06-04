@@ -1,15 +1,13 @@
 const graphql = require('graphql');
 const {
     UserType,
-    LocalizationType,
-    TimeType
+    LocalizationType
 } = require('./graphqlObjects');
 const {
     UserModel,
     LocalizationModel,
-    TimeModel
 } = require('../mongo/mongoSchema');
-
+const bcrypt = require('bcrypt');
 
 //query to get users and their args
 exports.RootQuery = new graphql.GraphQLObjectType({
@@ -33,6 +31,39 @@ exports.RootQuery = new graphql.GraphQLObjectType({
                 return UserModel.findById(args.id).exec();
             }
         },
+        // A query to login
+        // It takes a username and a password as arguments and returns
+        // 0 if the login is successful, 1 if the username is not found, 2 if the password is incorrect
+        login : {
+            type: graphql.GraphQLString,
+            description: 'returns true if login was successful, false otherwise',
+            args: {
+                username: { type : graphql.GraphQLNonNull(graphql.GraphQLString) },
+                password: { type : graphql.GraphQLNonNull(graphql.GraphQLString) },
+            },
+            resolve: (source, args, context, info) => {
+                return UserModel.findOne({username: args.username})
+                    .then(userFound => {
+                        console.log(userFound);
+                        return bcrypt.compare(args.password, userFound.password)
+                            .then(valid => {
+                                if (!valid) {
+                                    return 2;
+                                } else {
+                                    return userFound.id;
+                                }
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                return 2;
+                            });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        return 1;
+                    });
+            }
+        },
         localizations : {
             type: new graphql.GraphQLList(LocalizationType),
             description: 'Query to get a list of all Localizations',
@@ -48,23 +79,6 @@ exports.RootQuery = new graphql.GraphQLObjectType({
             },
             resolve: (source, args, context, info) => {
                 return LocalizationModel.findById(args.id).exec();
-            }
-        },
-        times : {
-            type: new graphql.GraphQLList(TimeType),
-            description: 'Query to get a list of all times',
-            resolve: () => {
-                return TimeModel.find().exec();
-            }
-        },
-        time : {
-            type: TimeType,
-            description: 'Query a time from id',
-            args: {
-                id: { type: graphql.GraphQLNonNull(graphql.GraphQLID) }
-            },
-            resolve: (source, args, context, info) => {
-                return TimeModel.findById(args.id).exec();
             }
         },
         deleteUser : {
@@ -108,27 +122,6 @@ exports.RootQuery = new graphql.GraphQLObjectType({
             },
             resolve: (source, args, context, info) =>{
                 return LocalizationModel.findByIdAndUpdate(args.id,args);
-            }
-        },
-        deleteTime : {
-            type: TimeType,
-            description: 'Query to delete a time',
-            args: {
-                id: { type: graphql.GraphQLNonNull(graphql.GraphQLID) }
-            },
-            resolve: (source, args, context, info) => {
-                return TimeModel.findByIdAndDelete(args.id);
-            }
-        },
-        updateTime : {
-            type: TimeType,
-            args: {
-                id: { type: graphql.GraphQLNonNull(graphql.GraphQLID) },
-                hour: {type: graphql.GraphQLNonNull(graphql.GraphQLInt)},
-                minutes: {type: graphql.GraphQLNonNull(graphql.GraphQLInt)}
-            },
-            resolve: (source, args, context, info) =>{
-                return TimeModel.findByIdAndUpdate(args.id,args);
             }
         }
     })
