@@ -39,10 +39,11 @@ app.use(express.static(path.join(__dirname, 'data')));
 
 //You also may want to install the MongoDB : https://www.mongodb.com/try/download/community?tck=docs_server
 //for now, the database is local, i.e on the same device as the running server
-const URLDatabase = 'mongodb://localhost:27017/';
+//const URLDatabase = 'mongodb://localhost:27017/';
+const uri = process.env.MONGODB_URI;
 
 //mongoose is used to define mongodb Schemas, thus simplifying the graphql implementation
-mongoose.connect(URLDatabase,
+mongoose.connect(uri,
     { useNewUrlParser: true,
       useUnifiedTopology: true })
     .then(() => console.log('Connected to local database'))
