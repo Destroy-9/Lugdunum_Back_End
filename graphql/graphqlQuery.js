@@ -7,7 +7,7 @@ const {
     UserModel,
     LocalizationModel,
 } = require('../mongo/mongoSchema');
-
+const bcrypt = require('bcrypt');
 
 //query to get users and their args
 exports.RootQuery = new graphql.GraphQLObjectType({
@@ -29,6 +29,28 @@ exports.RootQuery = new graphql.GraphQLObjectType({
             },
             resolve: (source, args, context, info) => {
                 return UserModel.findById(args.id).exec();
+            }
+        },
+        // A query to login
+        // It takes a username and a password as arguments and returns true if the login is successful, false otherwise
+        login : {
+            type: graphql.GraphQLBoolean,
+            description: 'returns true if login was successful, false otherwise',
+            args: {
+                username: { type : graphql.GraphQLNonNull(graphql.GraphQLString) },
+                password: { type : graphql.GraphQLNonNull(graphql.GraphQLString) },
+            },
+            resolve: async (source, args, context, info) => {
+                const userFound = await UserModel.find({username: args.username}).exec();
+                //we take the first user of the array since username is unique
+                let valid = await bcrypt.compare(args.password, userFound[0].password);
+                if (!valid) {
+                    return false;
+                }else{
+                    console.log('Login Error');
+                    return true;
+                }
+                return false;
             }
         },
         localizations : {
