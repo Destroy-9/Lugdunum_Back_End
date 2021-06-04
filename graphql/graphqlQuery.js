@@ -32,25 +32,36 @@ exports.RootQuery = new graphql.GraphQLObjectType({
             }
         },
         // A query to login
-        // It takes a username and a password as arguments and returns true if the login is successful, false otherwise
+        // It takes a username and a password as arguments and returns
+        // 0 if the login is successful, 1 if the username is not found, 2 if the password is incorrect
         login : {
-            type: graphql.GraphQLBoolean,
+            type: graphql.GraphQLString,
             description: 'returns true if login was successful, false otherwise',
             args: {
                 username: { type : graphql.GraphQLNonNull(graphql.GraphQLString) },
                 password: { type : graphql.GraphQLNonNull(graphql.GraphQLString) },
             },
-            resolve: async (source, args, context, info) => {
-                const userFound = await UserModel.find({username: args.username}).exec();
-                //we take the first user of the array since username is unique
-                let valid = await bcrypt.compare(args.password, userFound[0].password);
-                if (!valid) {
-                    return false;
-                }else{
-                    console.log('Login Error');
-                    return true;
-                }
-                return false;
+            resolve: (source, args, context, info) => {
+                return UserModel.findOne({username: args.username})
+                    .then(userFound => {
+                        console.log(userFound);
+                        return bcrypt.compare(args.password, userFound.password)
+                            .then(valid => {
+                                if (!valid) {
+                                    return 2;
+                                } else {
+                                    return userFound.id;
+                                }
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                return 2;
+                            });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        return 1;
+                    });
             }
         },
         localizations : {
