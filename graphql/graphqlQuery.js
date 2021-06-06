@@ -118,7 +118,7 @@ exports.RootQuery = new graphql.GraphQLObjectType({
             args: {
                 id: {type: graphql.GraphQLNonNull(graphql.GraphQLID)},
                 lat: {type: graphql.GraphQLNonNull(graphql.GraphQLFloat)},
-                long: {type: graphql.GraphQLNonNull(graphql.GraphQLFloat)}
+                lng: {type: graphql.GraphQLNonNull(graphql.GraphQLFloat)}
             },
             resolve: (source, args, context, info) =>{
                 return LocalizationModel.findByIdAndUpdate(args.id,args);

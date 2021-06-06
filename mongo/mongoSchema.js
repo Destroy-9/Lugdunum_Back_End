@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema(
 const localizationSchema = mongoose.Schema(
     {
         lat: { type: Number, required: true },
-        long: { type: Number, required: true },
+        lng: { type: Number, required: true },
         userId: { type: String, required: true },
     },
     { timestamps: true }

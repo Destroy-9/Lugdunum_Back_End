@@ -10,11 +10,11 @@ mutation createUser($username: String!, $password: String!){
 }
 
 //mutation to add localization
-mutation createLoc($lat: Float!, $long: Float!, $userId: ID!, $timeId: ID!){
-  addLocalization(lat: $lat, long: $long, userId: $userId, timeId: $timeId){
+mutation createLoc($lat: Float!, $lng: Float!, $userId: ID!){
+  addLocalization(lat: $lat, lng: $lng, userId: $userId){
     id,
     lat,
-    long
+    lng
   }
 }
 
@@ -34,7 +34,7 @@ mutation createLoc($lat: Float!, $long: Float!, $userId: ID!, $timeId: ID!){
   localizations{
     id,
     lat,
-    long,
+    lng,
     createdAt,
     updatedAt
   }
@@ -52,11 +52,11 @@ query UpdateLoc($id: ID!, $username: String!, $password: String!) {
 }
 
 //query to update localization
-query UpdateLoc($id: ID!, $lat: Float!, $long: Float!) {
-  updateLocalization(id: $id, lat: $lat, long: $long) {
+query UpdateLoc($id: ID!, $lat: Float!, $lng: Float!) {
+  updateLocalization(id: $id, lat: $lat, lng: $lng) {
     id,
     lat,
-    long
+    lng
   }
 }
 
@@ -76,7 +76,7 @@ query DeleteLoc($id: ID!) {
   deleteLocalization(id: $id) {
     id,
     lat,
-    long
+    lng
   }
 }
 
@@ -91,7 +91,7 @@ query DeleteLoc($id: ID!) {
     localizations {
       id,
       lat,
-      long,
+      lng,
       createdAt
     }
   }
