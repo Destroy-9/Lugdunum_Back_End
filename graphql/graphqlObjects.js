@@ -9,11 +9,11 @@ const {
 
 const LocalizationType = new GraphQLObjectType({
     name: 'Localization',
-    description: 'Represents localization with lat and long',
+    description: 'Represents localization with lat and lng',
     fields: () => ({
         id: {type: GraphQLNonNull(GraphQLID)},
         lat: {type: GraphQLFloat},
-        long: {type: GraphQLFloat},
+        lng: {type: GraphQLFloat},
         userId: {type: GraphQLID},
         user: {
             type: UserType,
